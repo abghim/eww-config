@@ -1,0 +1,171 @@
+$b1: #14191f;
+$b2: #1C2228;
+$b3: #20232B;
+$b4: #262A30;
+
+$s1: #285A6B;
+$s2: #3E7C8F;
+$s3: #5C9FB2;
+$s4: #94dff7;
+
+$c1: #A04C62;
+$c2: #B6677C;
+$c3: #CF8899;
+$c4: #f7b5c7;
+
+$h1: #C45A26;
+$h2: #D87237;
+$h3: #E88C4C;
+$h4: #F7A967;
+
+$m1: #467159;
+$m2: #54846B;
+
+$l1: #9F7EB5;
+$l2: #cabbed;
+
+* {
+  all: unset;
+  font-family: "Monaco Nerd Font";
+  font-size: 12px;
+}
+
+window {
+  background: transparent;
+}
+
+.bar-root {
+  margin: 0 18px;
+  padding: 0 14px;
+}
+
+.capsule-outer {
+  background: $b1;
+  border-radius: 999px;
+  padding: 6px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.capsule-border {
+  border-radius: 999px;
+  padding: 1px;
+  background-image: linear-gradient(45deg, $s3, $m2, $h4, $c4, $l2, $s3);
+  background-size: 260% 260%;
+  background-position: 0% 0%;
+}
+
+.capsule-inner {
+  background: $b1;
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+
+.left-capsule .capsule-inner {
+  padding: 8px 16px;
+}
+
+.right-capsule .capsule-inner {
+  padding: 8px 12px;
+}
+
+.workspace-strip {
+  min-height: 12px;
+}
+
+.ws-indicator {
+  min-width: 9px;
+  min-height: 9px;
+  border-radius: 999px;
+  background: $b4;
+  transition: 220ms ease;
+}
+
+.ws-indicator.occupied {
+  min-width: 9px;
+  background: #ffffff;
+}
+
+.ws-indicator.active {
+  min-width: 30px;
+  background: $l2;
+}
+
+.center-capsule {
+  border-radius: 999px;
+  padding: 9px 18px;
+  min-width: 260px;
+  background: rgba(14, 19, 24, 0.62);
+  border: 1px solid rgba(202, 187, 237, 0.32);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.focused-app-label {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.right-stack {
+  min-width: 300px;
+}
+
+.right-status-row {
+  min-height: 20px;
+}
+
+.metric-item {
+  spacing: 6px;
+  align-items: center;
+}
+
+.washer {
+  min-width: 18px;
+  min-height: 18px;
+  color: $s4;
+  background-color: rgba(255, 255, 255, 0.09);
+}
+
+.washer.ram {
+  color: $s4;
+}
+
+.washer.cpu {
+  color: $h4;
+}
+
+.washer.battery {
+  color: $m2;
+}
+
+.metric-label {
+  color: #ffffff;
+  letter-spacing: 0.6px;
+  font-size: 10px;
+}
+
+.power-toggle {
+  min-width: 22px;
+  min-height: 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+}
+
+.power-toggle:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.power-menu {
+  margin-top: 2px;
+}
+
+.power-action {
+  min-height: 22px;
+  border-radius: 999px;
+  padding: 0 10px;
+  background: $b2;
+  color: #ffffff;
+}
+
+.power-action:hover {
+  background: $b3;
+}
