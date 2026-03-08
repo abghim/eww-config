@@ -35,12 +35,12 @@ window {
 }
 
 .bar-root {
-  margin: 0 10px;
-  padding: 0 22px;
+  margin: 0 8px;
+  padding: 0 18px;
 }
 
 .bar-slot {
-  min-height: 50px;
+  min-height: 42px;
 }
 
 .bar-slot-left,
@@ -55,9 +55,9 @@ window {
 .capsule-outer {
   background: $b1;
   border-radius: 999px;
-  padding: 6px;
-  margin: 0 12px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  padding: 4px;
+  margin: 0 10px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.33);
 }
 
 .capsule-border {
@@ -71,7 +71,7 @@ window {
 .capsule-inner {
   background: $b1;
   border-radius: 999px;
-  padding: 8px 16px;
+  padding: 5px 14px;
 }
 
 .left-capsule .capsule-inner {
@@ -80,34 +80,38 @@ window {
 
 .right-capsule .capsule-inner {
   min-width: 270px;
-  padding: 8px 12px;
+  padding: 5px 10px;
 }
 
 .workspace-strip {
-  min-height: 12px;
+  min-height: 10px;
+}
+
+.ws-button {
+  padding: 0;
 }
 
 .ws-indicator {
-  min-width: 9px;
-  min-height: 9px;
+  min-width: 8px;
+  min-height: 8px;
   border-radius: 999px;
   background: $b4;
   transition: 220ms ease;
 }
 
 .ws-indicator.occupied {
-  min-width: 9px;
+  min-width: 8px;
   background: #ffffff;
 }
 
 .ws-indicator.active {
-  min-width: 30px;
+  min-width: 24px;
   background: $l2;
 }
 
 .center-capsule {
   border-radius: 999px;
-  padding: 9px 20px;
+  padding: 6px 16px;
   min-width: 260px;
   background: rgba(14, 19, 24, 0.62);
   border: 1px solid rgba(202, 187, 237, 0.32);
@@ -124,16 +128,16 @@ window {
 }
 
 .right-status-row {
-  min-height: 20px;
+  min-height: 18px;
 }
 
 .metric-item {
-  min-height: 18px;
+  min-height: 16px;
 }
 
 .washer {
-  min-width: 18px;
-  min-height: 18px;
+  min-width: 16px;
+  min-height: 16px;
   color: $s4;
   background-color: rgba(255, 255, 255, 0.09);
 }
@@ -153,31 +157,49 @@ window {
 .metric-label {
   color: #ffffff;
   letter-spacing: 0.6px;
-  font-size: 10px;
+  font-size: 9px;
 }
 
 .power-toggle {
-  min-width: 22px;
-  min-height: 22px;
+  min-width: 18px;
+  min-height: 18px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.09);
   color: #ffffff;
+  font-size: 11px;
 }
 
 .power-toggle:hover {
   background: rgba(255, 255, 255, 0.18);
 }
 
-.power-menu {
-  margin-top: 2px;
+.power-menu-capsule {
+  background: $b1;
+  border-radius: 999px;
+  padding: 4px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.36);
+}
+
+.power-menu-border {
+  border-radius: 999px;
+  padding: 1px;
+  background-image: linear-gradient(45deg, $s3, $m2, $h4, $c4, $l2, $s3);
+  background-size: 260% 260%;
+}
+
+.power-menu-inner {
+  border-radius: 999px;
+  padding: 4px 6px;
+  background: $b1;
 }
 
 .power-action {
-  min-height: 22px;
+  min-height: 20px;
   border-radius: 999px;
-  padding: 0 10px;
+  padding: 0 9px;
   background: $b2;
   color: #ffffff;
+  font-size: 10px;
 }
 
 .power-action:hover {

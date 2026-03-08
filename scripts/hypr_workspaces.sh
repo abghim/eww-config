@@ -23,8 +23,17 @@ if ! command -v hyprctl >/dev/null 2>&1 || ! command -v jq >/dev/null 2>&1; then
   exit 0
 fi
 
-active_id="$(hyprctl activeworkspace -j 2>/dev/null | jq -r '.id // 1' 2>/dev/null || echo 1)"
-opened_ids="$(hyprctl workspaces -j 2>/dev/null | jq -r '.[].id' 2>/dev/null | tr '\n' ' ')"
+active_id="$(
+  hyprctl activeworkspace -j 2>/dev/null \
+    | jq -r '.id // 1' 2>/dev/null \
+    || echo 1
+)"
+opened_ids="$(
+  hyprctl workspaces -j 2>/dev/null \
+    | jq -r '.[].id' 2>/dev/null \
+    | tr '\n' ' ' \
+    || true
+)"
 
 printf '['
 for ((i = 1; i <= count; i++)); do

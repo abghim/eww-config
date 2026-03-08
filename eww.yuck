@@ -1,30 +1,41 @@
-(defvar power_menu_open false)
-
-(defpoll hypr_workspaces :interval "2s" :initial "[]"
-  `"$EWW_CONFIG_DIR/scripts/hypr_workspaces.sh"`)
+(defpoll hypr_workspaces :interval "2s" :initial "[{\"id\":1,\"state\":\"inactive\"},{\"id\":2,\"state\":\"inactive\"},{\"id\":3,\"state\":\"inactive\"},{\"id\":4,\"state\":\"inactive\"},{\"id\":5,\"state\":\"inactive\"},{\"id\":6,\"state\":\"inactive\"},{\"id\":7,\"state\":\"inactive\"},{\"id\":8,\"state\":\"inactive\"},{\"id\":9,\"state\":\"inactive\"},{\"id\":10,\"state\":\"inactive\"}]"
+  `sh -c '[ -n "${EWW_CONFIG_DIR:-}" ] && "$EWW_CONFIG_DIR/scripts/hypr_workspaces.sh" || ./scripts/hypr_workspaces.sh'`)
 
 (defpoll focused_app :interval "1s" :initial "Desktop"
-  `"$EWW_CONFIG_DIR/scripts/focused_app.sh"`)
+  `sh -c '[ -n "${EWW_CONFIG_DIR:-}" ] && "$EWW_CONFIG_DIR/scripts/focused_app.sh" || ./scripts/focused_app.sh'`)
 
-(defpoll system_stats :interval "3s" :initial "{\"ram\": 0, \"cpu\": 0, \"battery\": 0, \"battery_present\": false}"
-  `"$EWW_CONFIG_DIR/scripts/system_stats.sh"`)
+(defpoll system_stats :interval "3s" :initial "{\"ram\": 35, \"cpu\": 42, \"battery\": 78, \"battery_present\": true}"
+  `sh -c '[ -n "${EWW_CONFIG_DIR:-}" ] && "$EWW_CONFIG_DIR/scripts/system_stats.sh" || ./scripts/system_stats.sh'`)
 
 (defpoll inset_border_style :interval "4s"
                            :initial "background-image: linear-gradient(45deg, #5C9FB2, #54846B, #F7A967, #f7b5c7, #cabbed, #5C9FB2); background-size: 260% 260%; background-position: 0% 0%;"
-  `"$EWW_CONFIG_DIR/scripts/border_gradient.sh"`)
+  `sh -c '[ -n "${EWW_CONFIG_DIR:-}" ] && "$EWW_CONFIG_DIR/scripts/border_gradient.sh" || ./scripts/border_gradient.sh'`)
 
 (defwindow top_bar
   :monitor '["<primary>", 0]'
   :geometry (geometry :x "0%"
                       :y "8px"
                       :width "100%"
-                      :height "66px"
+                      :height "54px"
                       :anchor "top center")
   :stacking "fg"
   :exclusive true
   :focusable "none"
   :namespace "eww-top-bar"
   (bar_layout))
+
+(defwindow power_menu
+  :monitor '["<primary>", 0]'
+  :geometry (geometry :x "-26px"
+                      :y "64px"
+                      :width "220px"
+                      :height "38px"
+                      :anchor "top right")
+  :stacking "overlay"
+  :exclusive false
+  :focusable "none"
+  :namespace "eww-power-menu"
+  (power_menu_floating))
 
 (defwidget bar_layout []
   (centerbox :class "bar-root"
@@ -51,13 +62,14 @@
 
 (defwidget workspace_strip []
   (box :class "workspace-strip"
+       :orientation "horizontal"
        :spacing 8
     (for ws in hypr_workspaces
       (button
-        :class {ws.state == "active" ? "ws-indicator active" : ws.state == "occupied" ? "ws-indicator occupied" : "ws-indicator inactive"}
+        :class "ws-button"
         :onclick "hyprctl dispatch workspace ${ws.id}"
         :tooltip "Workspace ${ws.id}"
-        ""))))
+        (box :class {ws.state == "active" ? "ws-indicator active" : ws.state == "occupied" ? "ws-indicator occupied" : "ws-indicator inactive"})))))
 
 (defwidget center_capsule []
   (box :class "center-capsule"
@@ -68,6 +80,8 @@
 
 (defwidget metric_washer [label value class]
   (box :class "metric-item"
+       :orientation "horizontal"
+       :spacing 5
     (circular-progress :class "washer ${class}"
                        :value value
                        :start-at 0.75
@@ -78,19 +92,21 @@
 (defwidget right_status []
   (box :class "right-stack"
        :orientation "vertical"
-       :spacing 5
+       :spacing 0
     (box :class "right-status-row"
          :spacing 10
       (metric_washer :label "RAM" :value {system_stats.ram} :class "ram")
       (metric_washer :label "CPU" :value {system_stats.cpu} :class "cpu")
       (metric_washer :label "BAT" :value {system_stats.battery} :class "battery")
       (button :class "power-toggle"
-              :onclick {power_menu_open ? "eww update power_menu_open=false" : "eww update power_menu_open=true"}
-              ""))
-    (revealer :reveal power_menu_open
-              :transition "slidedown"
-              :duration "300ms"
-      (box :class "power-menu"
+              :onclick "sh -c 'eww active-windows | grep -q \"power_menu\" && eww close power_menu || eww open power_menu'"
+              ""))))
+
+(defwidget power_menu_floating []
+  (box :class "power-menu-capsule"
+    (box :class "power-menu-border"
+         :style inset_border_style
+      (box :class "power-menu-inner"
            :spacing 6
         (button :class "power-action"
                 :onclick "systemctl poweroff"
