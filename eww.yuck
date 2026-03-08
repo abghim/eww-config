@@ -18,7 +18,7 @@
   :geometry (geometry :x "0%"
                       :y "8px"
                       :width "100%"
-                      :height "58px"
+                      :height "66px"
                       :anchor "top center")
   :stacking "fg"
   :exclusive true
@@ -28,18 +28,26 @@
 
 (defwidget bar_layout []
   (centerbox :class "bar-root"
-    (inset_capsule :class "left-capsule"
-      (workspace_strip))
-    (center_capsule)
-    (inset_capsule :class "right-capsule"
-      (right_status))))
+    (box :class "bar-slot bar-slot-left" :halign "start"
+      (left_capsule))
+    (box :class "bar-slot bar-slot-center" :halign "center"
+      (center_capsule))
+    (box :class "bar-slot bar-slot-right" :halign "end"
+      (right_capsule))))
 
-(defwidget inset_capsule [?class]
-  (box :class "capsule-outer ${class}"
+(defwidget left_capsule []
+  (box :class "capsule-outer left-capsule"
     (box :class "capsule-border"
          :style inset_border_style
       (box :class "capsule-inner"
-        (children)))))
+        (workspace_strip)))))
+
+(defwidget right_capsule []
+  (box :class "capsule-outer right-capsule"
+    (box :class "capsule-border"
+         :style inset_border_style
+      (box :class "capsule-inner"
+        (right_status)))))
 
 (defwidget workspace_strip []
   (box :class "workspace-strip"
@@ -70,7 +78,7 @@
 (defwidget right_status []
   (box :class "right-stack"
        :orientation "vertical"
-       :spacing 6
+       :spacing 5
     (box :class "right-status-row"
          :spacing 10
       (metric_washer :label "RAM" :value {system_stats.ram} :class "ram")
@@ -81,7 +89,7 @@
               ""))
     (revealer :reveal power_menu_open
               :transition "slidedown"
-              :duration "260ms"
+              :duration "300ms"
       (box :class "power-menu"
            :spacing 6
         (button :class "power-action"
